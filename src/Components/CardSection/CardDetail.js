@@ -6,7 +6,11 @@ const CardDetail = () => {
   const [blogId, changeBlogId] = useState("");
 
   const toggleBlogId = (id) => {
-    changeBlogId(() => (blogId === id ? "" : id));
+    if (blogId === id) {
+      changeBlogId(""); 
+    } else {
+      changeBlogId(id);
+    }
   };
 
   return (
@@ -26,7 +30,7 @@ const CardDetail = () => {
               <Card.Text>
                 {blogId === item.id
                   ? item.desc
-                  : item.desc.split(" ").slice(0, 10).join(" ") + "..."}
+                  : item.desc.split(" ").slice(0,10).join(" ") + "..."}
               </Card.Text>
               <Button variant="secondary" onClick={() => toggleBlogId(item.id)}>
                 {blogId === item.id ? "Show less" : "Read more"}
