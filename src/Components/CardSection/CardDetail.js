@@ -3,14 +3,13 @@ import { Card, Button, Container } from "react-bootstrap";
 import { data } from "../Card.data";
 
 const CardDetail = () => {
-  const [blogId, changeBlogId] = useState("");
+  const [expandedBlogs, setExpandedBlogs] = useState({});
 
   const toggleBlogId = (id) => {
-    if (blogId === id) {
-      changeBlogId(""); 
-    } else {
-      changeBlogId(id);
-    }
+    setExpandedBlogs((prevExpandedBlogs) => ({
+      ...prevExpandedBlogs,
+      [id]: !prevExpandedBlogs[id],
+    }));
   };
 
   return (
@@ -28,12 +27,12 @@ const CardDetail = () => {
               <Card.Text>{item.date}</Card.Text>
               <Card.Title>{item.tilte}</Card.Title>
               <Card.Text>
-                {blogId === item.id
+                {expandedBlogs[item.id]
                   ? item.desc
-                  : item.desc.split(" ").slice(0,10).join(" ") + "..."}
+                  : item.desc.split(" ").slice(0, 10).join(" ") + "..."}
               </Card.Text>
               <Button variant="secondary" onClick={() => toggleBlogId(item.id)}>
-                {blogId === item.id ? "Show less" : "Read more"}
+                {expandedBlogs[item.id] ? "Show less" : "Read more"}
               </Button>
             </Card.Body>
           </Card>
